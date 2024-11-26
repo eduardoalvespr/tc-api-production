@@ -1,0 +1,19 @@
+from dataclasses import dataclass
+from typing import List
+
+from ....domain.value_objects import Category
+
+
+@dataclass
+class ProductCreation:
+    """Data structure for holding product creation data."""
+
+    name: str
+    category: Category
+    price: float
+    description: str
+    images: List[str]
+    cookTime: int
+
+
+__all__ = ["ProductCreation"]
