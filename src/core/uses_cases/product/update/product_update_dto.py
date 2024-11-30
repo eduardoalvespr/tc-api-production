@@ -1,6 +1,6 @@
 from dataclasses import dataclass
 from typing import List
-from uuid import UUID
+#from uuid import UUID
 
 from ....domain.value_objects import Category
 
@@ -15,8 +15,6 @@ class ProductUpdate:
     description: str
     images: List[str]
     cookTime: int
-    id: int
-    uuid: UUID
 
 
 __all__ = ["ProductUpdate"]

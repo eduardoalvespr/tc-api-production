@@ -24,7 +24,7 @@ def update_product(
     product_uuid: UUID,
     product: ProductUpdateIn,
     controller: ProductController = Depends(lambda: injector.get(ProductController)),  # noqa: B008
-) -> ProductOut:
+) -> ProductOut:  
     return controller.update_product(product_uuid, product)
 
 
@@ -33,6 +33,7 @@ def delete_product(
     product_uuid: UUID,
     controller: ProductController = Depends(lambda: injector.get(ProductController)),  # noqa: B008
 ) -> None:
+    print("$$$$$$$$$$$ROUTER$$$$$$$$$$$")
     controller.delete_product(product_uuid)
 
 

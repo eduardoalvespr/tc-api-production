@@ -21,9 +21,10 @@ class ProductDeleteUseCase:
         Parameters:
             product_uuid (UUID): The UUID of the product to delete.
         """
+        print("$$$$$$$$$$$DELETE-USE-CASE1$$$$$$$$$$$")
         if not self._product_repository.get_by_uuid(product_uuid):
             raise ProductNotFoundError(search_param=str(product_uuid))
-
+        print("$$$$$$$$$$$DELETE-USE-CASE2$$$$$$$$$$$")
         self._product_repository.delete(product_uuid)
 
 

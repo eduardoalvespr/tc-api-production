@@ -34,7 +34,6 @@ class ProductUpdateUseCase:
                 and it's not the product being updated.
         """
         db_product = self._product_repository.get_by_name(product.name)
-
         if db_product and db_product.uuid != product_uuid:
             raise DomainError(message="Product already exists")
 
@@ -46,6 +45,7 @@ class ProductUpdateUseCase:
                 price=product.price,
                 description=product.description,
                 images=product.images,
+                cookTime=product.cookTime
             ),
         )
 
@@ -60,6 +60,7 @@ class ProductUpdateUseCase:
             price=db_product.price,
             description=db_product.description,
             images=db_product.images,
+            cookTime=db_product.cookTime,
             created_at=db_product.created_at,
             updated_at=db_product.updated_at,
         )
