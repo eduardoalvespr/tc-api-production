@@ -9,16 +9,16 @@ from ...domain.value_objects import Category
 class ProductResult:
     """Data structure for holding product data."""
 
+    id: int
+    uuid: UUID
+    created_at: datetime
+    updated_at: datetime
     name: str
     category: Category
     price: float
     description: str
     images: list[str]
     cookTime: int
-    id: int
-    uuid: UUID
-    created_at: datetime
-    updated_at: datetime
 
 
 __all__ = ["ProductResult"]

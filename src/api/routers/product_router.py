@@ -1,12 +1,12 @@
+
 from typing import List
 from uuid import UUID
 from fastapi import APIRouter, Depends, status, Query
 
-#from src.core.domain.value_objects import Category
 
 from ..controllers import ProductController
 from ..dependencies import injector
-from ..schemas.product_schema import ProductCreationIn, ProductOut, ProductUpdateIn, ProductCategoryIn
+from ..schemas.product_schema import ProductCreationIn, ProductOut, ProductUpdateIn #, ProductCategoryIn
 
 router = APIRouter(tags=["Product"])
 
@@ -43,7 +43,7 @@ def get_products_by_category(
 ) -> List[ProductOut]:
     return controller.get_products_by_category(category)
 
-@router.get("/products", response_model=List[ProductOut])
+@router.get("/products/by-uuids", response_model=List[ProductOut])
 async def get_products_by_uuids(
     uuids: List[UUID] = Query(..., description="List of product UUIDs"),
     controller: ProductController = Depends(lambda: injector.get(ProductController))
@@ -51,9 +51,17 @@ async def get_products_by_uuids(
     """
     Get a list of products by their UUIDs.
     """  
-    print('###############################CHEGUEI AQUI####PRODUCT ROUTER######')
-    print(uuids)
     return controller.get_products_by_uuids(set(uuids))
+
+@router.get("/products/by-ids", response_model=List[ProductOut])
+async def get_products_by_ids(
+    ids: List[int] = Query(..., description="List of product IDs"),
+    controller: ProductController = Depends(lambda: injector.get(ProductController))
+):
+    """
+    Get a list of products by their IDs.
+    """  
+    return controller.get_products_by_ids(set(ids))
 
 
 __all__ = ["router"]

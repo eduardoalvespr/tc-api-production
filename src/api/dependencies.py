@@ -7,13 +7,14 @@ from src.core.uses_cases import (
     CheckinUseCase, 
     GetProductsByCategoryUseCase, 
     GetProductsByUUIdsUseCase,
+    GetProductsByIdsUseCase,
     ListOrdersUseCase, 
     UpdateOrderStatusUseCase,
     ProductCreationUseCase,
     ProductDeleteUseCase,
     ProductUpdateUseCase,
     )
-#from src.core.uses_cases.product.list.get_product_by_ids_use_case import GetProductsByIdsUseCase
+
 from src.infra.database.repositories import SQLAlchemyOrderRepository, SQLAlchemyProductRepository
 from src.infra.database.config.database import get_db_session
 
@@ -76,9 +77,12 @@ class AppModule(Module):
     @provider
     def provide_get_products_by_uuids(self, product_repository: ProductRepository) -> GetProductsByUUIdsUseCase:
         """Provides a GetProductsByCategoryUseCase instance."""
-        print('###############################CHEGUEI AQUI####DEPENDENCIES######')
-        print(product_repository)
         return GetProductsByUUIdsUseCase(product_repository)
+    
+    @provider
+    def provide_get_products_by_ids(self, product_repository: ProductRepository) -> GetProductsByIdsUseCase:
+        """Provides a GetProductsByCategoryUseCase instance."""
+        return GetProductsByIdsUseCase(product_repository)
 
     @provider
     def provide_checkin_use_case(
@@ -120,6 +124,7 @@ class AppModule(Module):
         product_delete_use_case: ProductDeleteUseCase,
         get_products_by_category_use_case: GetProductsByCategoryUseCase,
         get_products_by_uuids_use_case: GetProductsByUUIdsUseCase,
+        get_products_by_ids_use_case: GetProductsByIdsUseCase,
         product_details_presenter: Presenter[ProductOut, ProductOut],
     ) -> ProductController:
         """Provides a ProductController instance."""
@@ -129,6 +134,7 @@ class AppModule(Module):
             product_delete_use_case,
             get_products_by_category_use_case,
             get_products_by_uuids_use_case,
+            get_products_by_ids_use_case,
             product_details_presenter,
         )
 

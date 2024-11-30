@@ -86,7 +86,7 @@ class ProductRepository(ABC):
         pass
 
     @abstractmethod
-    def get_by_ids(self, product_ids: Set[id]) -> List[Product]:
+    def get_by_ids(self, ids: Set[int]) -> List[Product]:
         """Retrieves a list of products by their UUIDs.
 
         Args:

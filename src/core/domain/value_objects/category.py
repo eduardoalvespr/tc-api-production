@@ -1,14 +1,14 @@
-from enum import StrEnum, auto
+from enum import Enum #StrEnum #, auto
 from typing import List
 
 
-class Category(StrEnum):
+class Category(Enum):
     """An Enum that represents a Product Category."""
 
-    LANCHE = auto()
-    ACOMPANHAMENTO = auto()
-    BEBIDA = auto()
-    SOBREMESA = auto()
+    LANCHE = "lanche" # auto()
+    ACOMPANHAMENTO = "acompanhamento" # auto()
+    BEBIDA = "bebida" # auto()
+    SOBREMESA = "sobremesa" # auto()
 
     @classmethod
     def values(cls) -> List["Category"]:

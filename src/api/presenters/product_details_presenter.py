@@ -10,16 +10,16 @@ class ProductDetailsPresenter(Presenter[ProductOut, ProductResult]):
     def present(self, data: ProductResult) -> ProductOut:
         """Converts the CustomerResult instance into a CustomerDetailsOut instance."""
         return ProductOut(
+            id=data.id,
+            uuid=data.uuid,
+            created_at=data.created_at,
+            updated_at=data.updated_at,
             name=data.name,
             category=data.category,
             price=data.price,
             description=data.description,
             images=data.images,
             cookTime=data.cookTime,
-            id=data.id,
-            uuid=data.uuid,
-            created_at=data.created_at,
-            updated_at=data.updated_at,
         )
 
 

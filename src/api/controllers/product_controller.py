@@ -1,15 +1,14 @@
 from typing import Iterable, Set
 from uuid import UUID
 
-#from src.core.domain.value_objects import Category
-#from src.core.uses_cases import ProductCreationUseCase
 from src.core.uses_cases import (
     GetProductsByCategoryUseCase,
     GetProductsByUUIdsUseCase,
+    GetProductsByIdsUseCase,
     ProductResult,
     ProductUpdateUseCase,
     ProductDeleteUseCase,
-    ProductCreationUseCase
+    ProductCreationUseCase,
 )
 
 from ..presenters import Presenter
@@ -31,6 +30,7 @@ class ProductController:
         product_delete_use_case: ProductDeleteUseCase,
         get_products_by_category_use_case: GetProductsByCategoryUseCase,
         get_products_by_uuids_use_case: GetProductsByUUIdsUseCase,
+        get_products_by_ids_use_case: GetProductsByIdsUseCase,
         product_details_presenter: Presenter[ProductOut, ProductResult],
     ) -> None:
         self._product_creation_use_case = product_creation_use_case
@@ -38,6 +38,7 @@ class ProductController:
         self._product_delete_use_case = product_delete_use_case
         self._get_products_by_category_use_case = get_products_by_category_use_case
         self.get_products_by_uuids_use_case = get_products_by_uuids_use_case
+        self.get_products_by_ids_use_case = get_products_by_ids_use_case
         self._product_details_presenter = product_details_presenter
 
     def create_product(self, product_in: ProductCreationIn) -> ProductOut:
@@ -64,8 +65,13 @@ class ProductController:
         return self._product_details_presenter.present_many(products)
     
     def get_products_by_uuids(self, uuids: Set[UUID]) -> Iterable[ProductOut]:
-        print('###############################CHEGUEI AQUI####CONTROLLER######')
+        """Get a list of products in the system from the provided set of UUIDs."""
         products = self.get_products_by_uuids_use_case.execute(uuids)
+        return self._product_details_presenter.present_many(products)
+    
+    def get_products_by_ids(self, ids: Set[int]) -> Iterable[ProductOut]:
+        """Get a list of products in the system from the provided set of IDs (int)."""
+        products = self.get_products_by_ids_use_case.execute(ids)
         return self._product_details_presenter.present_many(products)
 
 

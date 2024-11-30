@@ -1,5 +1,5 @@
 from datetime import datetime
-from typing import List#, Literal
+from typing import List #, Literal
 from uuid import UUID
 from enum import Enum
 
@@ -52,6 +52,7 @@ class ProductUpdateIn(_BaseProduct):
             price=self.price,
             description=self.description,
             images=self.images,
+            cookTime=self.cookTime
         )
 
 
@@ -59,10 +60,10 @@ class ProductUpdateIn(_BaseProduct):
 class ProductOut(ProductCreationIn):
     """Schema for returning a product."""
 
+    id: int = Field(description="The product ID")
     uuid: UUID = Field(description="The product external uuid")
     created_at: datetime = Field(description="The product creation date")
     updated_at: datetime = Field(description="The product last update date")
-    id: int = Field(description="The product ID")
 
     @staticmethod
     def from_entity(entity: Product) -> "ProductOut":
@@ -77,16 +78,16 @@ class ProductOut(ProductCreationIn):
             raise ValueError(f"The UUID provided '{entity.uuid}' is not valid")
         
         return ProductOut(
+            id=entity._id,
+            uuid=entity.uuid,
+            created_at=entity.created_at,
+            updated_at=entity.updated_at,
             name=entity.name,
             category=entity.category,
             price=entity.price,
             description=entity.description,
             images=entity.images,
-            #uuid=str(entity.uuid) if entity.uuid else None,
-            uuid=entity.uuid, #if entity.uuid else None,
-            created_at=entity.created_at,
-            updated_at=entity.updated_at,
-            id=entity.id,
+            cookTime=entity.cookTime,       
         )
     
 class ProductCategoryEnum(str, Enum):
@@ -94,7 +95,6 @@ class ProductCategoryEnum(str, Enum):
     ACOMPANHAMENTO = "acompanhamento"
     BEBIDA = "bebida"
     SOBREMESA = "sobremesa"
-    #category: Enum["lanche","acompanhamento","bebida","sobremesa"] 
 
 
 class ProductCategoryIn(BaseModel):

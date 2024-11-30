@@ -137,19 +137,11 @@ class SQLAlchemyProductRepository(ProductRepository):
         Returns:
             An iterable collection of products.
         """
-        print('###############################CHEGUEI AQUI####produc_repository_impl######')
-        print(product_uuids)
         result = (
             self._session.query(ProductPersistentModel)
             .filter(ProductPersistentModel.uuid.in_(product_uuids))
             .all()
         )
-        print('############CHEGUEI AQUI####produc_repository_impl######DENOVO#########')
-        print(type(result))
-        print(result)
-        print('############produc_repository_impl######DENOVO1!!!')
-        print(result[0].to_entity())
-        print('############produc_repository_impl######DENOVO2!!!')
         return [p.to_entity() for p in result]
     
     def get_by_ids(self, product_ids: Set[id]) -> Iterable[Product]:

@@ -3,13 +3,12 @@ from datetime import datetime
 from typing import Optional
 from uuid import UUID
 
-from ..base import AggregateRoot, AssertionConcern
+from ..base import AssertionConcern
 from ..value_objects import Category
 
 
 
 @dataclass(kw_only=True)
-#class Product(AggregateRoot):
 class Product():
     """Represents a product in the system.
 
@@ -20,7 +19,7 @@ class Product():
     description: The product's description.
     images: The product's images.
     """
-    _id: Optional[int] | None = field(default=None)#
+    _id: int | None = field(default=None)#
     uuid: Optional[UUID] | None = field(default=None)#
     created_at: Optional[datetime] | None = field(default=None)#
     updated_at: Optional[datetime] | None = field(default=None)#
