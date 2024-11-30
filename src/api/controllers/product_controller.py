@@ -57,7 +57,6 @@ class ProductController:
 
     def delete_product(self, product_uuid: UUID) -> None:
         """Delete a product in the system from the provided product uuid."""
-        print("$$$$$$$$$$$DELETE-CONTROLLER$$$$$$$$$$$")
         self._product_delete_use_case.execute(product_uuid)
 
     def get_products_by_category(self, category: ProductCategoryIn) -> Iterable[ProductOut]:

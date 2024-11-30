@@ -1,6 +1,5 @@
 from dataclasses import dataclass
 from typing import List
-#from uuid import UUID
 
 from ....domain.value_objects import Category
 

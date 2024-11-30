@@ -54,6 +54,7 @@ class ProductCreationUseCase:
             created_at=product.created_at,
             updated_at=product.updated_at,
             uuid=product.uuid,
+            id=product._id,
         )
 
 
