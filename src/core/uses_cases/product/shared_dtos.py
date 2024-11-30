@@ -15,8 +15,8 @@ class ProductResult:
     description: str
     images: list[str]
     cookTime: int
-    uuid: UUID
     id: int
+    uuid: UUID
     created_at: datetime
     updated_at: datetime
 

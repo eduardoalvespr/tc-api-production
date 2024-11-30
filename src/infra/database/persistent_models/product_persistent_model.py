@@ -3,7 +3,7 @@ from typing import List
 from sqlalchemy import ARRAY, Column, Float, String, Integer, Enum as SaEnum
 from sqlalchemy.orm import Mapped
 
-from src.core.domain.entities import Product
+from src.core.domain.entities import Product as ProductEntity
 from src.core.domain.value_objects import Category
 
 from .persistent_model import PersistentModel
@@ -21,17 +21,19 @@ class ProductPersistentModel(PersistentModel):
     images: Mapped[List[str]] = Column(ARRAY(String), nullable=False)
     cookTime: Mapped[int] = Column(Integer, nullable=True)
 
-    def to_entity(self) -> Product:
+    def to_entity(self) -> ProductEntity:
         """Converts the persistent model to a domain entity."""
-        return Product(
+        return ProductEntity(
+            _id=self.id,
+            uuid=self.uuid,
+            created_at=self.created_at,
+            updated_at=self.updated_at,
             name=self.name,
             category=self.category,
             price=self.price,
             description=self.description,
             images=self.images,
-            cookTime=self.cookTime,
-            created_at=self.created_at,
-            updated_at=self.updated_at,
+            cookTime=self.cookTime,          
         )
 
 

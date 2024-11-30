@@ -1,6 +1,7 @@
 from datetime import datetime
-from typing import List, Literal
+from typing import List#, Literal
 from uuid import UUID
+from enum import Enum
 
 from pydantic import BaseModel, ConfigDict, Field
 
@@ -17,7 +18,8 @@ class _BaseProduct(BaseModel):
     images: List[str] = Field(
         description="List of image URLs for the product", min_length=1, max_length=50
     )
-    cookTime: int = Field(description="Time to get ready")
+    cookTime: int = Field(description="Time to get ready", gt=0)
+
 
 
 class ProductCreationIn(_BaseProduct):
@@ -53,36 +55,57 @@ class ProductUpdateIn(_BaseProduct):
         )
 
 
+
 class ProductOut(ProductCreationIn):
     """Schema for returning a product."""
 
-    uuid: UUID = Field(description="The product external id")
+    uuid: UUID = Field(description="The product external uuid")
     created_at: datetime = Field(description="The product creation date")
     updated_at: datetime = Field(description="The product last update date")
+    id: int = Field(description="The product ID")
 
     @staticmethod
     def from_entity(entity: Product) -> "ProductOut":
         """Creates a ProductOut instance from a Product entity."""
+        if isinstance(entity.uuid, UUID):
+            try:
+                # Try to convert the UUID from string to UUID object
+                entity.uuid = UUID(str(entity.uuid))
+            except ValueError:
+                raise ValueError(f"The UUID provided'{entity.uuid}'is not valid")
+        elif not isinstance(entity.uuid, UUID):
+            raise ValueError(f"The UUID provided '{entity.uuid}' is not valid")
+        
         return ProductOut(
             name=entity.name,
             category=entity.category,
             price=entity.price,
             description=entity.description,
             images=entity.images,
-            uuid=entity.uuid,
+            #uuid=str(entity.uuid) if entity.uuid else None,
+            uuid=entity.uuid, #if entity.uuid else None,
             created_at=entity.created_at,
             updated_at=entity.updated_at,
+            id=entity.id,
         )
     
+class ProductCategoryEnum(str, Enum):
+    LANCHE = "lanche"
+    ACOMPANHAMENTO = "acompanhamento"
+    BEBIDA = "bebida"
+    SOBREMESA = "sobremesa"
+    #category: Enum["lanche","acompanhamento","bebida","sobremesa"] 
+
+
 class ProductCategoryIn(BaseModel):
     """Represents the incoming data for a Product Category."""
+    category: ProductCategoryEnum
     
-    category: Literal["lanche","acompanhamento","bebida","sobremesa"]
-
 
 __all__ = [
     "ProductCreationIn",
     "ProductOut",
     "ProductUpdateIn",
-    "ProductCategoryIn"
+    "ProductCategoryIn",
+    "ProductCategoryEnum"
 ]

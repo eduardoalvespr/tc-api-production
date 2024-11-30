@@ -103,10 +103,9 @@ class SQLAlchemyProductRepository(ProductRepository):
         """
         result = (
             self._session.query(ProductPersistentModel)
-            .filter(eq(ProductPersistentModel.category, category))
+            .filter(ProductPersistentModel.category == category)
             .all()
         )
-
         return [p.to_entity() for p in result]
 
     def get_by_name(self, name: str) -> Product | None:
@@ -138,9 +137,33 @@ class SQLAlchemyProductRepository(ProductRepository):
         Returns:
             An iterable collection of products.
         """
+        print('###############################CHEGUEI AQUI####produc_repository_impl######')
+        print(product_uuids)
         result = (
             self._session.query(ProductPersistentModel)
             .filter(ProductPersistentModel.uuid.in_(product_uuids))
+            .all()
+        )
+        print('############CHEGUEI AQUI####produc_repository_impl######DENOVO#########')
+        print(type(result))
+        print(result)
+        print('############produc_repository_impl######DENOVO1!!!')
+        print(result[0].to_entity())
+        print('############produc_repository_impl######DENOVO2!!!')
+        return [p.to_entity() for p in result]
+    
+    def get_by_ids(self, product_ids: Set[id]) -> Iterable[Product]:
+        """Retrieves products by their IDs.
+
+        Args:
+            product_ids: The IDs of the products to retrieve.
+
+        Returns:
+            An iterable collection of products.
+        """
+        result = (
+            self._session.query(ProductPersistentModel)
+            .filter(ProductPersistentModel.id.in_(product_ids))
             .all()
         )
         return [p.to_entity() for p in result]

@@ -14,7 +14,7 @@ from .order_item import OrderItem
 class Order(AggregateRoot):
     """Represents an order in the system."""
     
-    _id: int
+#    _id: int
     _customer: str
     _items: List[OrderItem] = field(default_factory=list)
     _total_value: float = field(default=0.0)

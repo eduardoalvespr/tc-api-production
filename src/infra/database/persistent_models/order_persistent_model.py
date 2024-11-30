@@ -15,7 +15,7 @@ class OrderPersistentModel(PersistentModel):
 
     __tablename__ = "orders"
 
-    id = Column(Integer, primary_key=True)
+#    id = Column(Integer, primary_key=True)
     customer: Mapped[str] = Column(String, nullable=False)
     order_items: Mapped[List["OrderItemPersistentModel"]] = relationship(
         "OrderItemPersistentModel", back_populates="order", 
@@ -29,7 +29,7 @@ class OrderPersistentModel(PersistentModel):
         """Converts the persistent model to an Order entity."""
         return OrderEntity(
             _id=self.id,
-            _items=[item.to_entity() for item in self.items],
+            _items=[item.to_entity() for item in self.order_items],
             _total_value=self.total_value,
             _status=self.status,
             customer=self.customer,
@@ -42,7 +42,7 @@ class OrderPersistentModel(PersistentModel):
     def from_entity(entity: OrderEntity) -> "OrderPersistentModel":
         """Converts an Order entity to the persistent model."""
         return OrderPersistentModel(
-            customer_id=entity.customer.id,
+            customer=entity.customer,
             items=[OrderItemPersistentModel.from_entity(item, entity.id) for item in entity.items],
             total_value=entity.total_value,
             status=entity.status,

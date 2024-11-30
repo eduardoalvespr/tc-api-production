@@ -49,16 +49,22 @@ class CheckinUseCase:
             OrderCreationFailedDueToMissingProductsError: If any product is not found.
             CustomerNotFoundError: If the customer is not found.
         """
+        
         from ....domain.entities import Order
         self._validate_items(request.items)
+        
         customer = request.customer_name
         #produtos = request.items.
+#        print('###############################CHEGUEI AQUI########################')
+#        print(request.items) - ta chegando o objeto certinho
         product_map = self._get_products(request.items)
+        
         items = self._create_order_items(request.items, product_map)
+
         order = Order(_customer=customer, _items=list(items))
         created_order = self._order_repository.create(order)
 
-
+        
         return OrderResult(
             uuid=created_order.uuid,
             status=created_order.status,
@@ -87,7 +93,7 @@ class CheckinUseCase:
         if not items:
             raise EmptyOrderError()
 
-    def _get_products(self, items: Iterable[CheckinItem]) -> dict[UUID, Product]:
+    def _get_products(self, items: Iterable[CheckinItem]) -> dict[id, Product]:
         """Gets the products for the order items.
 
         Args:
@@ -99,34 +105,19 @@ class CheckinUseCase:
         Raises:
             OrderCreationFailedDueToMissingProductsError: If any product is not found.
         """
-        #uids = {item.product_id for item in items}
-        product_uuids = {item.product_uuid for item in items}
-        products = self._product_repository.get_by_uuids(product_uuids)
-        product_map = {product.uuid: product for product in products}
-        missing_products = product_uuids - product_map.keys()
+        #uuids = {item.product_uuid for item in items}
+        product_ids = {item.product_id for item in items}
+#        print('###############################CHEGUEI AQUI########################')
+#        print(product_ids) - TUDO CERTO ATÉ AQUI!!
+        products = self._product_repository.get_by_uuids(product_ids)
+        product_map = {product.id: product for product in products}
+        missing_products = product_ids - product_map.keys()
 
         if missing_products:
             raise OrderCreationFailedDueToMissingProductsError(missing_products)
 
         return product_map
 
-#    def _get_customer(self, customer_id: UUID) -> Customer:
-#        """Gets a customer by customer uuid.
-
-#        Args:
-#            customer_id: The customer's external identifier.
-
-#        Returns:
-#            Customer: The customer entity if found.
-
-#        Raises:
-#            CustomerNotFoundError: If the customer is not found.
-#        """
-#        customer = self._customer_repository.get_by_uuid(customer_id)
-#        if not customer:
-#            raise CustomerNotFoundError(search_params={"uuid": customer_id})
-
-#        return customer
     from ....domain.entities import OrderItem
     @staticmethod
     def _create_order_items(

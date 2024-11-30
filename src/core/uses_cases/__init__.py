@@ -8,6 +8,7 @@ from .order import (
 
 from .product import (
     GetProductsByCategoryUseCase,
+    GetProductsByUUIdsUseCase,
     ProductCreationUseCase,
     ProductDeleteUseCase,
     ProductResult,
@@ -17,6 +18,7 @@ from .product import (
 __all__ = [
     "CheckinUseCase",
     "GetProductsByCategoryUseCase",
+    "GetProductsByUUIdsUseCase",
     "ListOrdersUseCase",
     "OrderResult",
     "ProductCreationUseCase",

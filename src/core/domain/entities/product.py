@@ -1,11 +1,16 @@
-from dataclasses import dataclass
+from dataclasses import dataclass, field
+from datetime import datetime
+from typing import Optional
+from uuid import UUID
 
 from ..base import AggregateRoot, AssertionConcern
 from ..value_objects import Category
 
 
+
 @dataclass(kw_only=True)
-class Product(AggregateRoot):
+#class Product(AggregateRoot):
+class Product():
     """Represents a product in the system.
 
     Attributes:
@@ -15,7 +20,10 @@ class Product(AggregateRoot):
     description: The product's description.
     images: The product's images.
     """
-    _id: int
+    _id: Optional[int] | None = field(default=None)#
+    uuid: Optional[UUID] | None = field(default=None)#
+    created_at: Optional[datetime] | None = field(default=None)#
+    updated_at: Optional[datetime] | None = field(default=None)#
     name: str
     category: Category
     price: float
@@ -45,6 +53,15 @@ class Product(AggregateRoot):
         AssertionConcern.assert_argument_greater_than_zero(
             self.price, "Price must be greater than zero"
         )
+
+    @property
+    def id(self) -> int | None:
+        """The aggregate root's ID."""
+        return self._id
+    
+    @id.setter
+    def id(self, value):
+        self._id = value
 
 
 __all__ = ["Product"]

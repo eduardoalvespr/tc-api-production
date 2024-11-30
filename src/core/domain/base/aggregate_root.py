@@ -8,7 +8,7 @@ from uuid import UUID
 class AggregateRoot(ABC):
     """Base class for aggregate roots."""
 
-    _id: int | None = field(default=None)
+    id: int | None = field(default=None)
     uuid: UUID | None = field(default=None)
     created_at: datetime | None = field(default=None)
     updated_at: datetime | None = field(default=None)

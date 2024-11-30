@@ -1,10 +1,11 @@
-from typing import Iterable
+from typing import Iterable, Set
 from uuid import UUID
 
 #from src.core.domain.value_objects import Category
 #from src.core.uses_cases import ProductCreationUseCase
 from src.core.uses_cases import (
     GetProductsByCategoryUseCase,
+    GetProductsByUUIdsUseCase,
     ProductResult,
     ProductUpdateUseCase,
     ProductDeleteUseCase,
@@ -29,12 +30,14 @@ class ProductController:
         product_update_use_case: ProductUpdateUseCase,
         product_delete_use_case: ProductDeleteUseCase,
         get_products_by_category_use_case: GetProductsByCategoryUseCase,
+        get_products_by_uuids_use_case: GetProductsByUUIdsUseCase,
         product_details_presenter: Presenter[ProductOut, ProductResult],
     ) -> None:
         self._product_creation_use_case = product_creation_use_case
         self._product_update_use_case = product_update_use_case
         self._product_delete_use_case = product_delete_use_case
         self._get_products_by_category_use_case = get_products_by_category_use_case
+        self.get_products_by_uuids_use_case = get_products_by_uuids_use_case
         self._product_details_presenter = product_details_presenter
 
     def create_product(self, product_in: ProductCreationIn) -> ProductOut:
@@ -58,6 +61,11 @@ class ProductController:
     def get_products_by_category(self, category: ProductCategoryIn) -> Iterable[ProductOut]:
         """Get a list of products in the system from the provided product category."""
         products = self._get_products_by_category_use_case.execute(category)
+        return self._product_details_presenter.present_many(products)
+    
+    def get_products_by_uuids(self, uuids: Set[UUID]) -> Iterable[ProductOut]:
+        print('###############################CHEGUEI AQUI####CONTROLLER######')
+        products = self.get_products_by_uuids_use_case.execute(uuids)
         return self._product_details_presenter.present_many(products)
 
 

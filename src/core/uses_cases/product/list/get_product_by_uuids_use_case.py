@@ -1,13 +1,12 @@
-from typing import Iterable
+from typing import Iterable, Set
+from uuid import UUID
 
 from ....domain.repositories import ProductRepository
-from ....domain.value_objects import Category
-
 from ..shared_dtos import ProductResult
 
 
-class GetProductsByCategoryUseCase:
-    """A use case for retrieving products by category."""
+class GetProductsByUUIdsUseCase:
+    """A use case for retrieving products by Ids."""
 
     def __init__(self, product_repository: ProductRepository) -> None:
         """Initializes the use case with a product repository.
@@ -17,19 +16,19 @@ class GetProductsByCategoryUseCase:
         """
         self._product_repository = product_repository
 
-    def execute(self, category: Category) -> Iterable[ProductResult]:
-        """Executes the use case to get products by category.
+    def execute(self, product_uuids: Set[UUID]) -> Iterable[ProductResult]:
+        """Initializes the use case with a product repository.
 
         Args:
-            category (Category): The category to filter products by.
-
-        Returns:
-            An iterable of `ProductResult` instances representing the products.
+            product_repository (ProductRepository): The repository for accessing product data.
         """
-        products = self._product_repository.get_by_category(category)
-
+        print('#getProductsByUUId######CHEGUEI AQUI#######USE-CASE#####')
+        print(product_uuids)
+        products = self._product_repository.get_by_uuids(product_uuids)
+        
         return [
             ProductResult(
+                id=product.id,
                 uuid=product.uuid,
                 name=product.name,
                 category=product.category,
@@ -38,11 +37,10 @@ class GetProductsByCategoryUseCase:
                 images=product.images,
                 cookTime=product.cookTime,
                 created_at=product.created_at,
-                updated_at=product.updated_at,
-                id=product.id,
+                updated_at=product.updated_at
             )
             for product in products
         ]
-
+        
 
 __all__ = ["GetProductsByCategoryUseCase"]

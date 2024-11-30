@@ -13,11 +13,12 @@ class OrderItem(AggregateRoot):
     product_uuid: The UUID of the product.
     quantity: The quantity of the product.
     """
-    _id: int
-    product_uuid: UUID
+#    _id: int
+#    product_uuid: UUID
     product: Product
     quantity: int
     unit_price: float
+    cookTime: int
 
     def validate(self) -> None:
         """Validates the order product's attributes.
