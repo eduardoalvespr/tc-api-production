@@ -51,7 +51,6 @@ class SQLAlchemyOrderRepository(OrderRepository):
         """
         
         from ..persistent_models import OrderPersistentModel
-        print("$$$$$$$$$$$$$$$$$$ORDER-REPOSITORY-IMPL1$$$$$$$$$$$$$$$$$$")
         with self._session as session:
             session.execute(
                 update(OrderPersistentModel)
@@ -78,7 +77,7 @@ class SQLAlchemyOrderRepository(OrderRepository):
 
     def get_by_uuid(self, order_uuid: UUID) -> Order | None:
         """Retrieves an order by its uuid."""
-        
+        print("$$$$$$$$$$$$$$$$$$ORDER-REPOSITORY-IMPL1$$$$$$$$$$$$$$$$$$")
         from ..persistent_models import OrderPersistentModel
         order = (
             self._session.query(OrderPersistentModel)

@@ -54,7 +54,7 @@ class OrderController:
 
     def update_status(self, order_uuid: UUID, status_update: OrderStatusEnum) -> OrderOut:
         """Update the status of an order in the system from the provided order ID and status"""
-        order = self._update_order_status_use_case.update_status(order_uuid, status_update.status)
+        order = self._update_order_status_use_case.update_status(order_uuid, status_update)
         return self._order_details_presenter.present(order)
     
     def addToQueue(self, order_uuid: UUID) -> OrderIn:

@@ -20,8 +20,6 @@ def checkin(
     controller: OrderController = Depends(lambda: injector.get(OrderController)),  # noqa: B008
 ) -> OrderOut:
     """Process a fake checkout by adding selected products to the order queue."""
-    print("$$$$$$$$$$$$$$$$$$ROUTER$$$$$$$$$$$$$$$$$$")
-    print(order_in)
     return controller.checkin(order_in)
 
 @router.put("/{order_uuid}/status", response_model=OrderOut)
@@ -34,10 +32,12 @@ def update_order_status(
     return controller.update_status(order_uuid, status_update)
 
 
-@router.get("/", response_model=List[OrderOut])
-def list_orders(
+@router.get("/order/{order_uuid}", response_model=List[OrderOut])
+def get_order(
+    order_uuid: UUID,
     controller: OrderController = Depends(lambda: injector.get(OrderController)),  # noqa: B008
-) -> List[OrderOut]:
-    """List all orders."""
-    return controller.list_orders()
+) -> OrderOut:
+    """Return an order."""
+    print("$$$$$$$$$$$$$$$$$$ROUTER$$$$$$$$$$$$$$$$$$")
+    return controller.get_order(order_uuid)
 
