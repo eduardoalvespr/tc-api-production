@@ -10,7 +10,7 @@ class OrderCreatedPresenter(Presenter[OrderCreationOut, OrderResult]):
     def present(self, data: OrderResult) -> OrderCreationOut:
         """Converts the OrderResult instance into an OrderCreationOut instance."""
         return OrderCreationOut(
-            order_uuid=data.uuid,
+            order_uuid=data.order_uuid,
             status=data.status,
             id=data.id,
             )
