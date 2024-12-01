@@ -6,13 +6,11 @@ an SQL toolkit and Object-Relational Mapping (ORM) system for Python.
 They provide a high-level API for SQL operations, abstracting the underlying database system.
 """
 
-from .order_item_persistent_model import OrderItemPersistentModel
 from .order_persistent_model import OrderPersistentModel
 from .persistent_model import PersistentModel
 from .product_persistent_model import ProductPersistentModel
 
 __all__ = [
-    "OrderItemPersistentModel",
     "OrderPersistentModel",
     "PersistentModel",
     "ProductPersistentModel",

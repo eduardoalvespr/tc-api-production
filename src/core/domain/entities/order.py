@@ -1,54 +1,32 @@
-import copy
+#import copy
 from dataclasses import dataclass, field
-from typing import List
+from typing import Optional
+from uuid import UUID
+from datetime import datetime
 
 from ..base import AggregateRoot, AssertionConcern
 from ..exceptions import InvalidStatusTransitionError
 
 
 from ...domain.value_objects import OrderStatus
-from .order_item import OrderItem
 
 
 @dataclass(kw_only=True)
 class Order(AggregateRoot):
     """Represents an order in the system."""
+    _id: int | None = field(default=None)#
+    uuid: Optional[UUID] | None = field(default=None)#
+    created_at: Optional[datetime] | None = field(default=None)#
+    updated_at: Optional[datetime] | None = field(default=None)#
+    order_uuid: str
+    _status: OrderStatus 
     
-#    _id: int
-    _customer: str
-    _items: List[OrderItem] = field(default_factory=list)
-    _total_value: float = field(default=0.0)
-    _status: OrderStatus = field(default_factory=lambda: OrderStatus.RECEBIDO)
-    
-
     def __post_init__(self) -> None:
         self.validate()
-        self._recalculate_total_value()
 
     @property
-    def status(self) -> OrderStatus:  # noqa: D102
+    def status(self) -> OrderStatus:
         return self._status
-    
-    @property
-    def id(self) -> int:
-        return self._id
-
-    @property
-    def total_value(self) -> float:  # noqa: D102
-        return self._total_value
-
-    @property
-    def items(self) -> List[OrderItem]:
-        """Returns a list of items in the order."""
-        return copy.deepcopy(self._items)
-
-    @property
-    def customer(self) -> str:
-        """Returns the customer who made the order."""
-        return self._customer
-
-    def _recalculate_total_value(self) -> None:
-        self._total_value = sum(item.unit_price * item.quantity for item in self._items)
 
     @status.setter
     def status(self, new_status: OrderStatus) -> None:
@@ -74,10 +52,7 @@ class Order(AggregateRoot):
         Raises:
             DomainError: If any of the order's attributes are invalid.
         """
-        #AssertionConcern.assert_argument_not_null(self.customer, "Customer is required")
-        AssertionConcern.assert_argument_not_null(self.items, "Items are required")
-        AssertionConcern.assert_argument_not_empty(self.items, "Items are required")
-        AssertionConcern.assert_argument_not_null(self.status, "Status is required")
-
+        AssertionConcern.assert_argument_not_null(self.order_uuid, "order_uuid is required")
+   
 
 __all__ = ["Order"]

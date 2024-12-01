@@ -8,9 +8,6 @@ from sqlalchemy.orm import Session
 from src.core.domain.repositories.order_repository import OrderRepository
 
 
-
-
-
 class SQLAlchemyOrderRepository(OrderRepository):
     """Implementation of the OrderRepository using SQLAlchemy.
 
@@ -35,10 +32,8 @@ class SQLAlchemyOrderRepository(OrderRepository):
         Returns:
             Order: The created order with its uuid and other persistence details populated.
         """
-        
         from ..persistent_models import OrderPersistentModel
         db_order = OrderPersistentModel.from_entity(order)
-
         self._session.add(db_order)
         self._session.commit()
 
@@ -56,6 +51,7 @@ class SQLAlchemyOrderRepository(OrderRepository):
         """
         
         from ..persistent_models import OrderPersistentModel
+        print("$$$$$$$$$$$$$$$$$$ORDER-REPOSITORY-IMPL1$$$$$$$$$$$$$$$$$$")
         with self._session as session:
             session.execute(
                 update(OrderPersistentModel)

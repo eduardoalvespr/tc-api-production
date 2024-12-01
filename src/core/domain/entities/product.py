@@ -3,13 +3,13 @@ from datetime import datetime
 from typing import Optional
 from uuid import UUID
 
-from ..base import AssertionConcern
+from ..base import AssertionConcern, AggregateRoot
 from ..value_objects import Category
 
 
 
 @dataclass(kw_only=True)
-class Product():
+class Product(AggregateRoot):
     """Represents a product in the system.
 
     Attributes:
@@ -52,15 +52,6 @@ class Product():
         AssertionConcern.assert_argument_greater_than_zero(
             self.price, "Price must be greater than zero"
         )
-
-    @property
-    def id(self) -> int | None:
-        """The aggregate root's ID."""
-        return self._id
-    
-    @id.setter
-    def id(self, value):
-        self._id = value
 
 
 __all__ = ["Product"]

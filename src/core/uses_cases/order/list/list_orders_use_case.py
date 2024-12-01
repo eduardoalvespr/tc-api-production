@@ -2,7 +2,7 @@ from typing import Iterable
 
 from ....domain.repositories.order_repository import OrderRepository
 
-from ..shared_dtos import CustomerSummaryResult, OrderItemResult, OrderResult
+from ..shared_dtos import  OrderResult
 
 
 class ListOrdersUseCase:
@@ -22,30 +22,17 @@ class ListOrdersUseCase:
         Returns:
             An iterable of all orders.
         """
+        print("$$$$$$$$$$$$$$$$$$CHECKIN-USE-CASE1s$$$$$$$$$$$$$$$$$$")
         orders = self.repository.list_all()
         return [
             OrderResult(
                 uuid=order.uuid,
                 status=order.status,
-                total_value=order.total_value,
+                id=order.id,
                 created_at=order.created_at,
                 updated_at=order.updated_at,
-                customer=CustomerSummaryResult(
-                    name=order.customer.name,
-                    email=str(order.customer.email),
-                    cpf=str(order.customer.cpf),
-                ),
-                items=[
-                    OrderItemResult(
-                        product_name=item.product.name,
-                        quantity=item.quantity,
-                        unit_price=item.unit_price,
-                    )
-                    for item in order.items
-                ],
-            )
-            for order in orders
-        ]
+                order_uuid=order.order_uuid,
+            ) for order in orders]
 
 
 __all__ = ["ListOrdersUseCase"]

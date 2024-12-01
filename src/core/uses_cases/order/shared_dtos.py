@@ -1,46 +1,22 @@
 from dataclasses import dataclass
 from datetime import datetime
-from typing import Iterable
 from uuid import UUID
 
-
-
 from ...domain.value_objects import OrderStatus
-
-
-
-@dataclass
-class OrderItemResult:
-    """OrderItemResult represents the details of an order item."""
-
-    product_name: str
-    quantity: int
-    unit_price: float
-    product_id: int
-    product_uuid: UUID
-
-
-@dataclass
-class CustomerSummaryResult:
-    """CustomerSummaryResult represents the details of a customer."""
-
-    name: str
-    #email: str
-    #cpf: str
 
 
 @dataclass
 class OrderResult:
     """OrderDetails represents the details of an order."""
-
+    
+    id: int
     uuid: UUID
     created_at: datetime
     updated_at: datetime
+
+    order_uuid: UUID
     status: OrderStatus
-    total_value: float
-    items: Iterable[OrderItemResult]
-    customer: CustomerSummaryResult
-    id: int
+    
 
 
-__all__ = ["CustomerSummaryResult", "OrderItemResult", "OrderResult"]
+__all__ = ["OrderResult"] 

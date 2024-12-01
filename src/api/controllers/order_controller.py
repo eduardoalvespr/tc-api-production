@@ -8,7 +8,6 @@ from src.core.uses_cases.order import (
     UpdateOrderStatusUseCase,
     OrderResult
 )
-#from src.core.uses_cases.order import OrderResult
 
 from ..presenters import Presenter
 from ..schemas.order_schema import (
@@ -32,22 +31,25 @@ class OrderController:
         list_orders_use_case: ListOrdersUseCase,
         update_order_status_use_case: UpdateOrderStatusUseCase,
         order_created_presenter: Presenter[OrderCreationOut, OrderResult],
-        order_details_presenter: Presenter[OrderOut, OrderResult],
+        order_details_presenter: Presenter[OrderOut, OrderResult],#REVISAR NECESSIDADE
     ) -> None:
         self._checkin_use_case = checkin_use_case
         self._list_orders_use_case = list_orders_use_case
         self._update_order_status_use_case = update_order_status_use_case
         self._order_created_presenter = order_created_presenter
-        self._order_details_presenter = order_details_presenter
+        self._order_details_presenter = order_details_presenter#REVISAR NECESSIDADE
 
-    def checkin(self, order_in: OrderIn) -> OrderCreationOut:
+    def checkin(self, order_in: OrderIn) -> OrderOut:
         """Registers a new order in the system from the provided order data"""
         order = self._checkin_use_case.checkin(order_in.to_checkin_request())
+        
         return self._order_created_presenter.present(order)
 
     def list_orders(self) -> Iterable[OrderOut]:
         """Get a list of orders in the system"""
+        print("$$$$$$$$$$$$$$$$$$CONTROLLER1$$$$$$$$$$$$$$$$$$")
         orders = self._list_orders_use_case.list_orders()
+        print("$$$$$$$$$$$$$$$$$$CONTROLLER2$$$$$$$$$$$$$$$$$$")
         return self._order_details_presenter.present_many(orders)
 
     def update_status(self, order_uuid: UUID, status_update: OrderStatusEnum) -> OrderOut:

@@ -9,7 +9,11 @@ class OrderCreatedPresenter(Presenter[OrderCreationOut, OrderResult]):
 
     def present(self, data: OrderResult) -> OrderCreationOut:
         """Converts the OrderResult instance into an OrderCreationOut instance."""
-        return OrderCreationOut(number=data.uuid)
+        return OrderCreationOut(
+            order_uuid=data.uuid,
+            status=data.status,
+            id=data.id,
+            )
 
 
 __all__ = ["OrderCreatedPresenter"]

@@ -3,7 +3,7 @@ from uuid import UUID
 from ....domain.exceptions import OrderNotFoundError
 from ....domain.repositories.order_repository import OrderRepository
 from ....domain.value_objects.order_status import OrderStatus
-from ..shared_dtos import CustomerSummaryResult, OrderItemResult, OrderResult
+from ..shared_dtos import  OrderResult #OrderItemResult,
 
 
 class UpdateOrderStatusUseCase:
@@ -35,25 +35,13 @@ class UpdateOrderStatusUseCase:
         order.status = status
         order = self.repository.update_status(order_uuid, status)
         return OrderResult(
-            uuid=order.uuid,
-            status=order.status,
-            total_value=order.total_value,
-            created_at=order.created_at,
-            updated_at=order.updated_at,
-            customer=CustomerSummaryResult(
-                name=order.customer.name,
-                email=str(order.customer.email),
-                cpf=str(order.customer.cpf),
-            ),
-            items=[
-                OrderItemResult(
-                    product_name=item.product.name,
-                    quantity=item.quantity,
-                    unit_price=item.unit_price,
-                )
-                for item in order.items
-            ],
-        )
+                id=order.id,
+                uuid=order.uuid,
+                status=order.status,
+                created_at=order.created_at,
+                updated_at=order.updated_at,
+                order_uuid=order.order_uuid,
+            )
 
 
 __all__ = ["UpdateOrderStatusUseCase"]
