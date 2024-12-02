@@ -34,8 +34,8 @@ jobs:
 
       - name: Build and Push Docker Image
         run: |
-          docker build -t tech-challenge-phase-1-api:latest .
-          docker tag tech-challenge-phase-1-api:latest ${{ secrets.AWS_ACCOUNT_ID }}.dkr.ecr.${{ env.REGION_DEFAULT }}.amazonaws.com/project-01:latest
+          docker build -t tc-api-production:latest .
+          docker tag tc-api-production:latest ${{ secrets.AWS_ACCOUNT_ID }}.dkr.ecr.${{ env.REGION_DEFAULT }}.amazonaws.com/project-01:latest
           docker push ${{ secrets.AWS_ACCOUNT_ID }}.dkr.ecr.${{ env.REGION_DEFAULT }}.amazonaws.com/project-01:latest
 
       - name: Get kubeconfig
@@ -49,8 +49,8 @@ jobs:
           kubectl apply -f ingress.yaml
           kubectl apply -f hpa.yaml
           kubectl apply -f deployment.yaml
-          kubectl set image deployment/tech-challenge-phase-1-api tech-challenge-phase-1-api=${{ secrets.AWS_ACCOUNT_ID }}.dkr.ecr.${{ env.REGION_DEFAULT }}.amazonaws.com/project-01:latest
-          kubectl rollout restart deployment/tech-challenge-phase-1-api 
+          kubectl set image deployment/tc-api-production tc-api-production=${{ secrets.AWS_ACCOUNT_ID }}.dkr.ecr.${{ env.REGION_DEFAULT }}.amazonaws.com/project-01:latest
+          kubectl rollout restart deployment/tc-api-production 
 
       - name: Verify Deployment
         run: |
