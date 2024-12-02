@@ -1,14 +1,11 @@
 import traceback
 from http import HTTPStatus
 from typing import Callable, Coroutine
-
 from fastapi import FastAPI, Request, Response
 from starlette.responses import JSONResponse
-
 from src.config.env_settings import settings
 from src.core.domain.base.domain_error import DomainError
 from src.core.domain.exceptions.not_found_error import NotFoundError
-
 from .routers import production_router, product_router
 
 app = FastAPI(

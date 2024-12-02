@@ -9,7 +9,6 @@ This module provides a declaration of such objects,
 promoting code consistency and domain integrity.
 """
 
-#from src.core.domain.base import ValueObject
 
 from .category import Category
 from .order_status import OrderStatus
@@ -17,5 +16,4 @@ from .order_status import OrderStatus
 __all__ = [
     "Category",
     "OrderStatus",
-    #"ValueObject",
 ]

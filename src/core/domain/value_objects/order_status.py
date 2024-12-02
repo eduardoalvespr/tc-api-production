@@ -5,10 +5,10 @@ from typing import Dict, Iterable
 class OrderStatus(StrEnum):
     """An Enum that represents an Order Status."""
 
-    RECEBIDO = auto()
-    EM_PREPARACAO = auto()
-    PRONTO = auto()
-    FINALIZADO = auto()
+    RECEBIDO = "recebido"
+    EM_PREPARACAO = "em_preparacao"
+    PRONTO = "pronto"
+    FINALIZADO = "finalizado"
 
     @classmethod
     def values(cls) -> Iterable["OrderStatus"]:

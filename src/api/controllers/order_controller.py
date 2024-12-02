@@ -51,26 +51,16 @@ class OrderController:
     def get_order(self, order_uuid: UUID) -> OrderOut:
         """Get a Order by UUID."""
         order = self._get_order_by_uuid_use_case.get_order(order_uuid)
-        print("VOLTEI PRA CONTROLLER!!!!!!!!!!!!!!!!!!!!!!!!!!!")
-        print(order)
         return self._order_created_presenter.present(order)
 
     def list_orders(self) -> Iterable[OrderOut]:
         """Get a list of orders in the system"""
-        print("$$$$$$$$$$$$$$$$$$CONTROLLER1$$$$$$$$$$$$$$$$$$")
         orders = self._list_orders_use_case.list_orders()
-        print("$$$$$$$$$$$$$$$$$$CONTROLLER2$$$$$$$$$$$$$$$$$$")
         return self._order_details_presenter.present_many(orders)
 
     def update_status(self, order_uuid: UUID, status_update: OrderStatusIn) -> OrderOut:
         """Update the status of an order in the system from the provided order ID and status"""
-        print("@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@")
-        print(order_uuid)
-        print(status_update)
-        print('@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@')
         order = self._update_order_status_use_case.update_status(order_uuid, status_update)
-        print(order)
-        print('@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@')
         return self._order_details_presenter.present(order)
     
     def addToQueue(self, order_uuid: UUID) -> OrderIn:

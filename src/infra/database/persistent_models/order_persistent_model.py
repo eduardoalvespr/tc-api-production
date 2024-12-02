@@ -21,7 +21,6 @@ class OrderPersistentModel(PersistentModel):
         return OrderEntity(
             order_uuid=self.order_uuid,
             _status=self.status,
-            #PersistentModel
             _id=self.id,
             uuid=self.uuid,
             created_at=self.created_at,
@@ -34,7 +33,6 @@ class OrderPersistentModel(PersistentModel):
         return OrderPersistentModel(
             order_uuid=entity.order_uuid,
             status=entity.status,
-            #PersistentModel
             id=entity.id,
             uuid=entity.uuid,
             created_at=entity.created_at,

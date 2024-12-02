@@ -13,7 +13,6 @@ class OrderResult:
     uuid: UUID
     created_at: datetime
     updated_at: datetime
-
     order_uuid: UUID
     status: OrderStatus
     
