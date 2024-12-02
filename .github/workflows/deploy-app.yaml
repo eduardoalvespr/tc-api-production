@@ -13,11 +13,34 @@ jobs:
   deploy:
     name: Deploy
     runs-on: ubuntu-latest
+    environment: production
     if: github.event.pull_request.merged == true
 
     steps:
       - name: Checkout
         uses: actions/checkout@v3
+
+      - name: Configure AWS Credentials
+        uses: aws-actions/configure-aws-credentials@v1
+        with:
+          aws-access-key-id: ${{ secrets.AWS_ACCESS_KEY_ID }}
+          aws-secret-access-key: ${{ secrets.AWS_SECRET_ACCESS_KEY }}
+          aws-session-token: ${{ secrets.AWS_SESSION_TOKEN }}
+          aws-region: ${{ env.REGION_DEFAULT }}
+
+      - name: Login to ECR
+        run: |
+          aws ecr get-login-password --region ${{ env.REGION_DEFAULT }} | docker login --username AWS --password-stdin ${{ secrets.AWS_ACCOUNT_ID }}.dkr.ecr.${{ env.REGION_DEFAULT }}.amazonaws.com
+
+      - name: Build and Push Docker Image
+        run: |
+          docker build -t tech-challenge-phase-1-api:latest .
+          docker tag tech-challenge-phase-1-api:latest ${{ secrets.AWS_ACCOUNT_ID }}.dkr.ecr.${{ env.REGION_DEFAULT }}.amazonaws.com/project-01:latest
+          docker push ${{ secrets.AWS_ACCOUNT_ID }}.dkr.ecr.${{ env.REGION_DEFAULT }}.amazonaws.com/project-01:latest
+
+      - name: Get kubeconfig
+        run: |
+          aws eks --region ${{ env.REGION_DEFAULT }} update-kubeconfig --name ${{ secrets.CLUSTER_NAME }}
 
       - name: Deploy Application
         working-directory: k8s
@@ -26,9 +49,9 @@ jobs:
           kubectl apply -f ingress.yaml
           kubectl apply -f hpa.yaml
           kubectl apply -f deployment.yaml
-          kubectl rollout restart deployment/tc-api-production 
+          kubectl set image deployment/tech-challenge-phase-1-api tech-challenge-phase-1-api=${{ secrets.AWS_ACCOUNT_ID }}.dkr.ecr.${{ env.REGION_DEFAULT }}.amazonaws.com/project-01:latest
+          kubectl rollout restart deployment/tech-challenge-phase-1-api 
 
       - name: Verify Deployment
         run: |
           kubectl get all
-          
