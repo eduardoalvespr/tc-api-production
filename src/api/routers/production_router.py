@@ -29,6 +29,10 @@ def update_order_status(
     controller: OrderController = Depends(lambda: injector.get(OrderController)),  # noqa: B008
 ) -> OrderOut:
     """Update the status of an existing order."""
+    print("!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!")
+    print(order_uuid)
+    print(status_update)
+    print('!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!')
     return controller.update_status(order_uuid, status_update)
 
 

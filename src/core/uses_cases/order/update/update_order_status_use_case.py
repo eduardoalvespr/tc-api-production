@@ -27,7 +27,12 @@ class UpdateOrderStatusUseCase:
         Returns:
             Order: The updated order.
         """
+        print("###################################################")
+        print(order_uuid)
+        print(status)
         order = self.repository.get_by_uuid(order_uuid)
+        print(order)
+        print("##################################################")
 
         if not order:
             raise OrderNotFoundError(order_uuid)
@@ -40,7 +45,7 @@ class UpdateOrderStatusUseCase:
                 status=order.status,
                 created_at=order.created_at,
                 updated_at=order.updated_at,
-                order_uuid=order.order_uuid,
+                order_uuid=order_uuid,
             )
 
 

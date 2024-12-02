@@ -49,17 +49,20 @@ class SQLAlchemyOrderRepository(OrderRepository):
         Returns:
             Order: The updated order.
         """
-        
+        print("$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$")
+        print(order_uuid)
+        print(status)
+        print("$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$")
         from ..persistent_models import OrderPersistentModel
         with self._session as session:
             session.execute(
                 update(OrderPersistentModel)
-                .where(OrderPersistentModel.uuid == order_uuid)
+                .where(OrderPersistentModel.order_uuid == order_uuid)
                 .values(status=status)
             )
             session.commit()
             updated_order = session.execute(
-                select(OrderPersistentModel).where(OrderPersistentModel.uuid == order_uuid)
+                select(OrderPersistentModel).where(OrderPersistentModel.order_uuid == order_uuid)
             ).scalar_one()
             return updated_order.to_entity()
 
@@ -81,7 +84,7 @@ class SQLAlchemyOrderRepository(OrderRepository):
         from ..persistent_models import OrderPersistentModel
         order = (
             self._session.query(OrderPersistentModel)
-            .filter(OrderPersistentModel.uuid == order_uuid)
+            .filter(OrderPersistentModel.order_uuid == order_uuid)
             .first()
         )
 
