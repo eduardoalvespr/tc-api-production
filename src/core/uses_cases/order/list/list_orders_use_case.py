@@ -22,7 +22,6 @@ class ListOrdersUseCase:
         Returns:
             An iterable of all orders.
         """
-        print("$$$$$$$$$$$$$$$$$$CHECKIN-USE-CASE1s$$$$$$$$$$$$$$$$$$")
         orders = self.repository.list_all()
         return [
             OrderResult(

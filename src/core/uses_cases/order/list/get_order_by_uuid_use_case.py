@@ -24,11 +24,8 @@ class GetOrderByUUIDUseCase:
             An iterable of all orders.
         """
     
-        print("$$$$$$$$$$$$$$$$$$CHECKIN-USE-CASE1s$$$$$$$$$$$$$$$$$$")
-        print(order_uuid)
-        print("Order_UUID - use-case")
         order = self.repository.get_by_uuid(order_uuid)
-        print(order)
+
         if not order:
             raise OrderNotFoundError(order_uuid)
 

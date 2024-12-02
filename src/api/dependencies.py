@@ -68,7 +68,6 @@ class AppModule(Module):
     @provider
     def provide_product_delete_use_case(self, product_repository: ProductRepository) -> ProductDeleteUseCase:
         """Provides a ProductDeleteUseCase instance."""
-        print("$$$$$$$$$$$DEPENDENCIES$$$$$$$$$$$")
         return ProductDeleteUseCase(product_repository)
 
     @provider

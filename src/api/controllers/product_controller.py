@@ -53,8 +53,6 @@ class ProductController:
         updated_product = self._product_update_use_case.execute(
             product_uuid, product_in.to_product_update_dto()
         )
-        print("¨¨¨¨¨¨¨¨¨¨¨¨¨¨¨PRODUCT CONTROLLER ¨¨¨¨¨¨¨¨¨¨¨¨¨¨¨¨")
-        print(updated_product)
         return self._product_details_presenter.present(updated_product)
 
     def delete_product(self, product_uuid: UUID) -> None:
@@ -62,11 +60,8 @@ class ProductController:
         self._product_delete_use_case.execute(product_uuid)
 
     def get_products_by_category(self, category: ProductCategoryIn) -> Iterable[ProductOut]:
-        """Get a list of products in the system from the provided product category."""
-        
+        """Get a list of products in the system from the provided product category."""       
         products = self._get_products_by_category_use_case.execute(category)
-        print("**********************************************************")
-        print(products)
         return self._product_details_presenter.present_many(products)
     
     def get_products_by_uuids(self, uuids: Set[UUID]) -> Iterable[ProductOut]:

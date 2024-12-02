@@ -5,10 +5,10 @@ from typing import List
 class Category(Enum):
     """An Enum that represents a Product Category."""
 
-    LANCHE = "lanche" # auto()
-    ACOMPANHAMENTO = "acompanhamento" # auto()
-    BEBIDA = "bebida" # auto()
-    SOBREMESA = "sobremesa" # auto()
+    LANCHE = "lanche" 
+    ACOMPANHAMENTO = "acompanhamento" 
+    BEBIDA = "bebida" 
+    SOBREMESA = "sobremesa" 
 
     @classmethod
     def values(cls) -> List["Category"]:
