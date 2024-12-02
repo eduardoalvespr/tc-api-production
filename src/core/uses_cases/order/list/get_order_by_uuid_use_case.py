@@ -2,6 +2,7 @@
 from uuid import UUID
 
 from ....domain.repositories.order_repository import OrderRepository
+from ....domain.exceptions.order_not_found_error import OrderNotFoundError
 from ..shared_dtos import  OrderResult
 
 
@@ -27,13 +28,17 @@ class GetOrderByUUIDUseCase:
         print(order_uuid)
         print("Order_UUID - use-case")
         order = self.repository.get_by_uuid(order_uuid)
+        print(order)
+        if not order:
+            raise OrderNotFoundError(order_uuid)
+
         return OrderResult(
-            uuid=order.uuid,
-            status=order.status,
-            id=order.id,
-            created_at=order.created_at,
-            updated_at=order.updated_at,
-            order_uuid=order.order_uuid,
+                id=order.id,
+                uuid=order.uuid,
+                status=order.status,
+                created_at=order.created_at,
+                updated_at=order.updated_at,
+                order_uuid=order_uuid,
             ) 
 
 

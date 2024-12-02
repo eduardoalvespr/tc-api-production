@@ -27,18 +27,21 @@ class UpdateOrderStatusUseCase:
         Returns:
             Order: The updated order.
         """
-        print("###################################################")
+        print("$$$$$$$$$$$$$$$$$$$$$$$$$$$&&&&&&&&&&&&&&&&&&&&&&&&")
         print(order_uuid)
         print(status)
         order = self.repository.get_by_uuid(order_uuid)
         print(order)
+        #print(order.to_entity())
         print("##################################################")
 
         if not order:
             raise OrderNotFoundError(order_uuid)
 
-        order.status = status
+        #order.status = status
         order = self.repository.update_status(order_uuid, status)
+        print(order)
+        print("####&**&*&*&*&*&*&*&*&*&*&*&*&*&*&*&*&*&*&*&########")
         return OrderResult(
                 id=order.id,
                 uuid=order.uuid,

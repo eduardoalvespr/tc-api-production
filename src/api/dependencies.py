@@ -9,6 +9,7 @@ from src.core.uses_cases import (
     GetProductsByUUIdsUseCase,
     GetProductsByIdsUseCase,
     ListOrdersUseCase, 
+    GetOrderByUUIDUseCase,
     UpdateOrderStatusUseCase,
     ProductCreationUseCase,
     ProductDeleteUseCase,
@@ -96,6 +97,11 @@ class AppModule(Module):
     def provide_list_orders_use_case(self, order_repository: OrderRepository) -> ListOrdersUseCase:
         """Provides a ListOrdersUseCase instance."""
         return ListOrdersUseCase(order_repository)
+    
+    @provider
+    def provide_get_order_by_uuid_use_case(self, order_repository: OrderRepository) -> GetOrderByUUIDUseCase:
+        """Provides a GetOrderByUUIDUseCase instance."""
+        return GetOrderByUUIDUseCase(order_repository)
 
     @provider
     def provide_update_order_status_use_case(self, order_repository: OrderRepository) -> UpdateOrderStatusUseCase:
@@ -144,6 +150,7 @@ class AppModule(Module):
         self,
         checkout_use_case: CheckinUseCase,
         list_orders_use_case: ListOrdersUseCase,
+        get_order_by_uuid_use_case: GetOrderByUUIDUseCase,
         update_order_status_use_case: UpdateOrderStatusUseCase,
         order_created_presenter: Presenter[OrderCreationOut, OrderOut],
         order_details_presenter: Presenter[OrderOut, OrderOut],
@@ -152,6 +159,7 @@ class AppModule(Module):
         return OrderController(
             checkout_use_case,
             list_orders_use_case,
+            get_order_by_uuid_use_case,
             update_order_status_use_case,
             order_created_presenter,
             order_details_presenter,

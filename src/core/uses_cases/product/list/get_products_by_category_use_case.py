@@ -27,7 +27,8 @@ class GetProductsByCategoryUseCase:
             An iterable of `ProductResult` instances representing the products.
         """
         products = self._product_repository.get_by_category(category)
-
+        print("+++++++++++++++++++++++++++++++++++++++++++++++++++++")
+        print(products)
         return [
             ProductResult(
                 uuid=product.uuid,

@@ -2,6 +2,7 @@
 from .order import (
     CheckinUseCase,
     ListOrdersUseCase,
+    GetOrderByUUIDUseCase,
     OrderResult,
     UpdateOrderStatusUseCase,
 )
@@ -22,6 +23,7 @@ __all__ = [
     "GetProductsByUUIdsUseCase",
     "GetProductsByIdsUseCase",
     "ListOrdersUseCase",
+    "GetOrderByUUIDUseCase",
     "OrderResult",
     "ProductCreationUseCase",
     "ProductDeleteUseCase",
