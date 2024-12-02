@@ -45,7 +45,7 @@ class OrderOut(BaseModel):
     order_uuid: UUID = Field(description="The order UUID")
     status: OrderStatus = Field(description="The Order status")
     id: int = Field(description="The id indicates the position number in the queue")
-    model_config = ConfigDict(str_strip_whitespace=True, arbitrary_types_allowed=True)
+    model_config = ConfigDict(str_strip_whitespace=True) #, arbitrary_types_allowed=True
 
 __all__ = [
     "OrderCreationOut",

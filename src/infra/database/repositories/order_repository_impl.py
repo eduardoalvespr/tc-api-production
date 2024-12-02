@@ -60,12 +60,12 @@ class SQLAlchemyOrderRepository(OrderRepository):
         with self._session as session:
             session.execute(
                 update(OrderPersistentModel)
-                .where(OrderPersistentModel.order_uuid == order_uuid)
+                .where(OrderPersistentModel.order_uuid == str(order_uuid))
                 .values(status=status)
             )
             session.commit()
             updated_order = session.execute(
-                select(OrderPersistentModel).where(OrderPersistentModel.order_uuid == order_uuid)
+                select(OrderPersistentModel).where(OrderPersistentModel.order_uuid == str(order_uuid))
             ).scalar_one()
             print("#@#@#@#@#@#@#@#@#@#@#@#@#@#@#@#@#@#@#@#@#@#@#@#@#")
             print(updated_order)
@@ -88,10 +88,10 @@ class SQLAlchemyOrderRepository(OrderRepository):
     def get_by_uuid(self, order_uuid: UUID) -> Order | None:
         """Retrieves an order by its uuid."""
         print("$$$$$$$$$$$$$$$$$$ORDER-REPOSITORY-IMPL1$$$$$$$$$$$$$$$$$$")
-        #from ..persistent_models import OrderPersistentModel
+
         order = (
             self._session.query(OrderPersistentModel)
-            .filter(OrderPersistentModel.order_uuid == order_uuid)
+            .filter(OrderPersistentModel.order_uuid == str(order_uuid))
             .first()
         )
         print(order)
@@ -104,7 +104,7 @@ class SQLAlchemyOrderRepository(OrderRepository):
         print("$$$$$$$$$$$$$$$$$$ORDER-REPOSITORY-IMPL1 - to.entity$$$$$$$$$$$$$$$$$$")
         print(order.to_entity())
         print("$$$$$$$$$$$$$$$$$$ORDER-REPOSITORY-IMPL- out$$$$$$$$$$$$$$$$$$")
-        return order
+        return order.to_entity()
     
     def get_last_by_status(self, status: OrderStatus) -> Order | None:
         """Retrieves a order by its status and the last id."""
