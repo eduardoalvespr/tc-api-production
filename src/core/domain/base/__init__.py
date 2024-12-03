@@ -4,6 +4,7 @@ It includes `ValueObject`, `AggregateRoot`, `DomainError` and `AssertionConcern`
 It provides essential building blocks for defining domain entities,
 value objects, erros, and more.
 """
+
 from .aggregate_root import AggregateRoot
 from .assertion_concern import AssertionConcern
 from .domain_error import DomainError

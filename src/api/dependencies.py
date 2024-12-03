@@ -4,29 +4,28 @@ from sqlalchemy.orm import Session
 
 from src.core.domain.repositories import OrderRepository, ProductRepository
 from src.core.uses_cases import (
-    CheckinUseCase, 
-    GetProductsByCategoryUseCase, 
-    GetProductsByUUIdsUseCase,
-    GetProductsByIdsUseCase,
-    ListOrdersUseCase, 
+    CheckinUseCase,
     GetOrderByUUIDUseCase,
-    UpdateOrderStatusUseCase,
+    GetProductsByCategoryUseCase,
+    GetProductsByIdsUseCase,
+    GetProductsByUUIdsUseCase,
+    ListOrdersUseCase,
     ProductCreationUseCase,
     ProductDeleteUseCase,
     ProductUpdateUseCase,
-    )
-
-from src.infra.database.repositories import SQLAlchemyOrderRepository, SQLAlchemyProductRepository
+    UpdateOrderStatusUseCase,
+)
 from src.infra.database.config.database import get_db_session
+from src.infra.database.repositories import SQLAlchemyOrderRepository, SQLAlchemyProductRepository
 
 from .controllers import OrderController, ProductController
 from .presenters import (
     OrderCreatedPresenter,
     OrderDetailsPresenter,
-    ProductDetailsPresenter,
     Presenter,
+    ProductDetailsPresenter,
 )
-from .schemas import OrderCreationOut, OrderOut , ProductOut
+from .schemas import OrderCreationOut, OrderOut, ProductOut
 
 
 class AppModule(Module):
@@ -35,17 +34,16 @@ class AppModule(Module):
     It uses the provider decorator from the injector package to specify how to provide each
      dependency.
     """
+
     @singleton
     @provider
     def provide_session(self) -> Session:
         """Provides an SQLAlchemy session."""
-        return next(get_db_session())    
-    
+        return next(get_db_session())
+
     @singleton
     @provider
-    def provide_product_repository(
-        self,
-        session: Session ) -> ProductRepository:
+    def provide_product_repository(self, session: Session) -> ProductRepository:
         """Provides a ProductRepository instance."""
         return SQLAlchemyProductRepository(session)
 
@@ -56,32 +54,44 @@ class AppModule(Module):
         return SQLAlchemyOrderRepository(session)
 
     @provider
-    def provide_product_creation_use_case(self, product_repository: ProductRepository) -> ProductCreationUseCase:
+    def provide_product_creation_use_case(
+        self, product_repository: ProductRepository
+    ) -> ProductCreationUseCase:
         """Provides a ProductCreationUseCase instance."""
         return ProductCreationUseCase(product_repository)
 
     @provider
-    def provide_product_update_use_case(self, product_repository: ProductRepository) -> ProductUpdateUseCase:
+    def provide_product_update_use_case(
+        self, product_repository: ProductRepository
+    ) -> ProductUpdateUseCase:
         """Provides a ProductUpdateUseCase instance."""
         return ProductUpdateUseCase(product_repository)
 
     @provider
-    def provide_product_delete_use_case(self, product_repository: ProductRepository) -> ProductDeleteUseCase:
+    def provide_product_delete_use_case(
+        self, product_repository: ProductRepository
+    ) -> ProductDeleteUseCase:
         """Provides a ProductDeleteUseCase instance."""
         return ProductDeleteUseCase(product_repository)
 
     @provider
-    def provide_get_products_by_category_use_case(self, product_repository: ProductRepository) -> GetProductsByCategoryUseCase:
+    def provide_get_products_by_category_use_case(
+        self, product_repository: ProductRepository
+    ) -> GetProductsByCategoryUseCase:
         """Provides a GetProductsByCategoryUseCase instance."""
         return GetProductsByCategoryUseCase(product_repository)
-    
+
     @provider
-    def provide_get_products_by_uuids(self, product_repository: ProductRepository) -> GetProductsByUUIdsUseCase:
+    def provide_get_products_by_uuids(
+        self, product_repository: ProductRepository
+    ) -> GetProductsByUUIdsUseCase:
         """Provides a GetProductsByCategoryUseCase instance."""
         return GetProductsByUUIdsUseCase(product_repository)
-    
+
     @provider
-    def provide_get_products_by_ids(self, product_repository: ProductRepository) -> GetProductsByIdsUseCase:
+    def provide_get_products_by_ids(
+        self, product_repository: ProductRepository
+    ) -> GetProductsByIdsUseCase:
         """Provides a GetProductsByCategoryUseCase instance."""
         return GetProductsByIdsUseCase(product_repository)
 
@@ -91,19 +101,23 @@ class AppModule(Module):
     ) -> CheckinUseCase:
         """Provides a CheckinUseCase instance."""
         return CheckinUseCase(order_repository, product_repository)
-    
+
     @provider
     def provide_list_orders_use_case(self, order_repository: OrderRepository) -> ListOrdersUseCase:
         """Provides a ListOrdersUseCase instance."""
         return ListOrdersUseCase(order_repository)
-    
+
     @provider
-    def provide_get_order_by_uuid_use_case(self, order_repository: OrderRepository) -> GetOrderByUUIDUseCase:
+    def provide_get_order_by_uuid_use_case(
+        self, order_repository: OrderRepository
+    ) -> GetOrderByUUIDUseCase:
         """Provides a GetOrderByUUIDUseCase instance."""
         return GetOrderByUUIDUseCase(order_repository)
 
     @provider
-    def provide_update_order_status_use_case(self, order_repository: OrderRepository) -> UpdateOrderStatusUseCase:
+    def provide_update_order_status_use_case(
+        self, order_repository: OrderRepository
+    ) -> UpdateOrderStatusUseCase:
         """Provides an UpdateOrderStatusUseCase instance."""
         return UpdateOrderStatusUseCase(order_repository)
 
@@ -111,7 +125,7 @@ class AppModule(Module):
     def provide_product_details_presenter(self) -> Presenter[ProductOut, ProductOut]:
         """Provides a ProductDetailsPresenter instance."""
         return ProductDetailsPresenter()
-    
+
     @provider
     def provide_order_created_presenter(self) -> Presenter[OrderCreationOut, OrderOut]:
         """Provides an OrderCreatedPresenter instance."""
@@ -164,11 +178,15 @@ class AppModule(Module):
             order_details_presenter,
         )
 
+
 injector = Injector([AppModule()])
 
-def injector_dependency(cls):
-    def dependency(injector: Injector = Depends(lambda: injector)):
+
+def injector_dependency(cls: any) -> Injector:
+    def dependency(injector: Injector = Depends(lambda: injector)):  # noqa: B008, ANN202
         return injector.get(cls)
+
     return dependency
+
 
 __all__ = ["injector"]

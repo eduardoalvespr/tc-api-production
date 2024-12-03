@@ -1,6 +1,4 @@
-from typing import List
-
-from sqlalchemy.orm import Mapped 
+from sqlalchemy.orm import Mapped
 
 from src.core.domain.entities import Order as OrderEntity
 from src.core.domain.value_objects import OrderStatus

@@ -8,7 +8,4 @@ They form the core of the domain model, encapsulating both behavior and data.
 from .order import Order
 from .product import Product
 
-__all__ = [
-    "Order", 
-    "Product"
-]
+__all__ = ["Order", "Product"]

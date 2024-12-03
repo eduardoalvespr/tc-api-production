@@ -1,16 +1,16 @@
-
 from ....domain.repositories import (
     OrderRepository,
     ProductRepository,
 )
+from ..shared_dtos import OrderResult
+from .checkin_dto import CheckinOrder
 
-from ..shared_dtos import  OrderResult 
-from .checkin_dto import  CheckinOrder 
 
 class CheckinUseCase:
     """CheckoutUseCase encapsulates the business logic for creating orders."""
-    
+
     from ....domain.entities import Product
+
     def __init__(
         self,
         order_repository: OrderRepository,
@@ -41,11 +41,11 @@ class CheckinUseCase:
             OrderCreationFailedDueToMissingProductsError: If any product is not found.
             CustomerNotFoundError: If the customer is not found.
         """
-        
-        from ....domain.entities import Order        
+        from ....domain.entities import Order
+
         order = Order(order_uuid=request.order_uuid, _status=request.status)
         created_order = self._order_repository.create(order)
-        
+
         return OrderResult(
             id=created_order.id,
             uuid=created_order.uuid,
@@ -53,7 +53,7 @@ class CheckinUseCase:
             created_at=created_order.created_at,
             updated_at=created_order.updated_at,
             order_uuid=created_order.order_uuid,
-            )
+        )
 
 
 __all__ = ["CheckinUseCase"]

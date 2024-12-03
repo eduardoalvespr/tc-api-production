@@ -3,7 +3,7 @@ from uuid import UUID
 from ....domain.exceptions import OrderNotFoundError
 from ....domain.repositories.order_repository import OrderRepository
 from ....domain.value_objects.order_status import OrderStatus
-from ..shared_dtos import  OrderResult 
+from ..shared_dtos import OrderResult
 
 
 class UpdateOrderStatusUseCase:
@@ -34,13 +34,13 @@ class UpdateOrderStatusUseCase:
 
         order = self.repository.update_status(order_uuid, status)
         return OrderResult(
-                id=order.id,
-                uuid=order.uuid,
-                status=order.status,
-                created_at=order.created_at,
-                updated_at=order.updated_at,
-                order_uuid=order_uuid,
-            )
+            id=order.id,
+            uuid=order.uuid,
+            status=order.status,
+            created_at=order.created_at,
+            updated_at=order.updated_at,
+            order_uuid=order_uuid,
+        )
 
 
 __all__ = ["UpdateOrderStatusUseCase"]

@@ -29,9 +29,9 @@ class AggregateRoot(ABC):
     def id(self) -> int | None:
         """The aggregate root's ID."""
         return self._id
-    
+
     @id.setter
-    def id(self, value):
+    def id(self, value: int) -> None:
         self._id = value
 
 

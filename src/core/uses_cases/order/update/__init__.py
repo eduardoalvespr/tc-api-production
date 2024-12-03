@@ -1,4 +1,3 @@
-from .update_order_status_use_case import UpdateOrderStatusUseCase, OrderNotFoundError
+from .update_order_status_use_case import OrderNotFoundError, UpdateOrderStatusUseCase
 
-
-__all__ = [ "UpdateOrderStatusUseCase", "OrderNotFoundError"]
+__all__ = ["OrderNotFoundError", "UpdateOrderStatusUseCase"]

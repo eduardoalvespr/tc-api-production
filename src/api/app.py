@@ -1,18 +1,22 @@
 import traceback
 from http import HTTPStatus
 from typing import Callable, Coroutine
+
 from fastapi import FastAPI, Request, Response
 from starlette.responses import JSONResponse
+
 from src.config.env_settings import settings
 from src.core.domain.base.domain_error import DomainError
 from src.core.domain.exceptions.not_found_error import NotFoundError
-from .routers import production_router, product_router
+
+from .routers import product_router, production_router
 
 app = FastAPI(
     docs_url=settings.DOCS_URL,
     redoc_url=settings.REDOC_URL,
     title="tc-api-production",
 )
+
 
 async def _exception_middleware(
     request: Request, call_next: Callable[[Request], Coroutine[None, None, Response]]
@@ -82,12 +86,3 @@ app.middleware("http")(_exception_middleware)
 def root() -> dict[str, str]:
     """Health check endpoint."""
     return {"status": "OK"}
-
-
-
-
-
-
-
-
-

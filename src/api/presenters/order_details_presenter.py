@@ -1,6 +1,6 @@
 from src.core.uses_cases.order import OrderResult
 
-from ..schemas import  OrderOut
+from ..schemas import OrderOut
 from .presenter import Presenter
 
 
@@ -15,7 +15,8 @@ class OrderDetailsPresenter(Presenter[OrderOut, OrderResult]):
             created_at=data.created_at,
             updated_at=data.updated_at,
             order_uuid=data.order_uuid,
-            status=data.status,            
+            status=data.status,
         )
+
 
 __all__ = ["OrderDetailsPresenter"]

@@ -1,8 +1,6 @@
+from .http_error import HttpErrorOut
 from .order_schema import OrderCreationOut, OrderIn, OrderOut
 from .product_schema import ProductCreationIn, ProductOut
-from .http_error import HttpErrorOut
-
-
 
 __all__ = [
     "HttpErrorOut",
@@ -10,5 +8,5 @@ __all__ = [
     "OrderIn",
     "OrderOut",
     "ProductCreationIn",
-    "ProductOut"
+    "ProductOut",
 ]

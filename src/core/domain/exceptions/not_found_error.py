@@ -1,5 +1,6 @@
 from ..base.domain_error import DomainError
 
+
 class NotFoundError(DomainError):
     """Base class for errors where an entity is not found."""
 

@@ -19,7 +19,7 @@ class ProductDetailsPresenter(Presenter[ProductOut, ProductResult]):
             price=data.price,
             description=data.description,
             images=data.images,
-            cookTime=data.cookTime,
+            cooktime=data.cooktime,
         )
 
 
