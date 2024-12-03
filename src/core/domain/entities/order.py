@@ -1,31 +1,36 @@
-#import copy
 from dataclasses import dataclass, field
+from datetime import datetime
 from typing import Optional
 from uuid import UUID
-from datetime import datetime
-
-from ..base import AggregateRoot, AssertionConcern
-from ..exceptions import InvalidStatusTransitionError
-
 
 from ...domain.value_objects import OrderStatus
+from ..base import AggregateRoot, AssertionConcern
+from ..exceptions import InvalidStatusTransitionError
 
 
 @dataclass(kw_only=True)
 class Order(AggregateRoot):
     """Represents an order in the system."""
-    _id: int | None = field(default=None)#
-    uuid: Optional[UUID] | None = field(default=None)#
-    created_at: Optional[datetime] | None = field(default=None)#
-    updated_at: Optional[datetime] | None = field(default=None)#
+
+    _id: int | None = field(default=None)  #
+    uuid: Optional[UUID] | None = field(default=None)  #
+    created_at: Optional[datetime] | None = field(default=None)  #
+    updated_at: Optional[datetime] | None = field(default=None)  #
     order_uuid: str
-    _status: OrderStatus 
-    
+    _status: OrderStatus
+
     def __post_init__(self) -> None:
         self.validate()
 
     @property
     def status(self) -> OrderStatus:
+        """Return self status attribute.
+
+        This method return the status of the object
+
+        Raises:
+            DomainError: If any of the order's attributes are invalid.
+        """
         return self._status
 
     @status.setter
@@ -53,6 +58,6 @@ class Order(AggregateRoot):
             DomainError: If any of the order's attributes are invalid.
         """
         AssertionConcern.assert_argument_not_null(self.order_uuid, "order_uuid is required")
-   
+
 
 __all__ = ["Order"]

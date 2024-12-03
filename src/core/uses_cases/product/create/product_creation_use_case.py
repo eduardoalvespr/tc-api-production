@@ -1,7 +1,6 @@
 from ....domain.base import DomainError
 from ....domain.entities.product import Product
 from ....domain.repositories import ProductRepository
-
 from ..shared_dtos import ProductResult
 from .product_creation_dto import ProductCreation
 
@@ -38,8 +37,7 @@ class ProductCreationUseCase:
             price=product_data.price,
             description=product_data.description or "No description",
             images=product_data.images or ["https://via.placeholder.com/150"],
-            cookTime=product_data.cookTime
-            
+            cooktime=product_data.cooktime,
         )
 
         product = self.repository.create(product)
@@ -50,7 +48,7 @@ class ProductCreationUseCase:
             price=product.price,
             description=product.description,
             images=product.images,
-            cookTime=product.cookTime,
+            cooktime=product.cooktime,
             created_at=product.created_at,
             updated_at=product.updated_at,
             uuid=product.uuid,

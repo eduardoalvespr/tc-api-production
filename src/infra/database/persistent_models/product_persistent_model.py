@@ -1,6 +1,7 @@
 from typing import List
 
-from sqlalchemy import ARRAY, Column, Float, String, Integer, Enum as SaEnum
+from sqlalchemy import ARRAY, Column, Float, Integer, String
+from sqlalchemy import Enum as SaEnum
 from sqlalchemy.orm import Mapped
 
 from src.core.domain.entities import Product as ProductEntity
@@ -19,7 +20,7 @@ class ProductPersistentModel(PersistentModel):
     price: Mapped[float] = Column(Float, nullable=False)
     description: Mapped[str] = Column(String(255), nullable=False)
     images: Mapped[List[str]] = Column(ARRAY(String), nullable=False)
-    cookTime: Mapped[int] = Column(Integer, nullable=True)
+    cooktime: Mapped[int] = Column(Integer, nullable=True)
 
     def to_entity(self) -> ProductEntity:
         """Converts the persistent model to a domain entity."""
@@ -33,7 +34,7 @@ class ProductPersistentModel(PersistentModel):
             price=self.price,
             description=self.description,
             images=self.images,
-            cookTime=self.cookTime,          
+            cooktime=self.cooktime,
         )
 
 

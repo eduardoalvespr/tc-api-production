@@ -2,7 +2,6 @@ from typing import Iterable
 
 from ....domain.repositories import ProductRepository
 from ....domain.value_objects import Category
-
 from ..shared_dtos import ProductResult
 
 
@@ -35,7 +34,7 @@ class GetProductsByCategoryUseCase:
                 price=product.price,
                 description=product.description,
                 images=product.images,
-                cookTime=product.cookTime,
+                cooktime=product.cooktime,
                 created_at=product.created_at,
                 updated_at=product.updated_at,
                 id=product.id,

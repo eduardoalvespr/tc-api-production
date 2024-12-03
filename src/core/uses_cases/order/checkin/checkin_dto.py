@@ -10,4 +10,4 @@ class CheckinOrder:
     status: Enum
 
 
-__all__ = ["CheckinOrder"] 
+__all__ = ["CheckinOrder"]

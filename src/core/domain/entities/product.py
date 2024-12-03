@@ -3,9 +3,8 @@ from datetime import datetime
 from typing import Optional
 from uuid import UUID
 
-from ..base import AssertionConcern, AggregateRoot
+from ..base import AggregateRoot, AssertionConcern
 from ..value_objects import Category
-
 
 
 @dataclass(kw_only=True)
@@ -19,16 +18,17 @@ class Product(AggregateRoot):
     description: The product's description.
     images: The product's images.
     """
-    _id: int | None = field(default=None)#
-    uuid: Optional[UUID] | None = field(default=None)#
-    created_at: Optional[datetime] | None = field(default=None)#
-    updated_at: Optional[datetime] | None = field(default=None)#
+
+    _id: int | None = field(default=None)
+    uuid: Optional[UUID] | None = field(default=None)
+    created_at: Optional[datetime] | None = field(default=None)
+    updated_at: Optional[datetime] | None = field(default=None)
     name: str
     category: Category
     price: float
     description: str
     images: list[str]
-    cookTime: int
+    cooktime: int
 
     def validate(self) -> None:
         """Validates the product's attributes.

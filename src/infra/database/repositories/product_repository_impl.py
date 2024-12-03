@@ -41,7 +41,7 @@ class SQLAlchemyProductRepository(ProductRepository):
             price=product.price,
             description=product.description,
             images=product.images,
-            cookTime=product.cookTime,
+            cooktime=product.cooktime,
         )
 
         self._session.add(db_product)
@@ -72,7 +72,7 @@ class SQLAlchemyProductRepository(ProductRepository):
         db_product.price = product.price
         db_product.description = product.description
         db_product.images = product.images
-        db_product.cookTime = product.cookTime
+        db_product.cooktime = product.cooktime
 
         self._session.commit()
         self._session.refresh(db_product)
@@ -143,7 +143,7 @@ class SQLAlchemyProductRepository(ProductRepository):
             .all()
         )
         return [p.to_entity() for p in result]
-    
+
     def get_by_ids(self, product_ids: Set[id]) -> Iterable[Product]:
         """Retrieves products by their IDs.
 

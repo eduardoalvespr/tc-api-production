@@ -16,10 +16,13 @@ class GetProductsByIdsUseCase:
         self._product_repository = product_repository
 
     def execute(self, ids: Set[int]) -> Iterable[ProductResult]:
-        """Initializes the use case with a product repository.
+        """Executes the use case to retrieve products by their IDs.
 
         Args:
-            product_repository (ProductRepository): The repository for accessing product data.
+        ids (Set[int]): A set of product IDs to retrieve.
+
+        Returns:
+        Iterable[ProductResult]: An iterable containing the resulting products.
         """
         products = self._product_repository.get_by_ids(ids)
         return [
@@ -33,10 +36,10 @@ class GetProductsByIdsUseCase:
                 price=product.price,
                 description=product.description,
                 images=product.images,
-                cookTime=product.cookTime,  
+                cooktime=product.cooktime,
             )
             for product in products
         ]
-        
+
 
 __all__ = ["GetProductsByIdsUseCase"]

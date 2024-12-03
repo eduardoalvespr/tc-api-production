@@ -1,7 +1,7 @@
 from datetime import datetime
-from typing import List #, Literal
-from uuid import UUID
 from enum import Enum
+from typing import List
+from uuid import UUID
 
 from pydantic import BaseModel, ConfigDict, Field
 
@@ -18,8 +18,7 @@ class _BaseProduct(BaseModel):
     images: List[str] = Field(
         description="List of image URLs for the product", min_length=1, max_length=50
     )
-    cookTime: int = Field(description="Time to get ready", gt=0)
-
+    cooktime: int = Field(description="Time to get ready", gt=0)
 
 
 class ProductCreationIn(_BaseProduct):
@@ -35,7 +34,7 @@ class ProductCreationIn(_BaseProduct):
             price=self.price,
             description=self.description,
             images=self.images,
-            cookTime=self.cookTime
+            cooktime=self.cooktime,
         )
 
 
@@ -52,9 +51,8 @@ class ProductUpdateIn(_BaseProduct):
             price=self.price,
             description=self.description,
             images=self.images,
-            cookTime=self.cookTime
+            cooktime=self.cooktime,
         )
-
 
 
 class ProductOut(ProductCreationIn):
@@ -70,13 +68,12 @@ class ProductOut(ProductCreationIn):
         """Creates a ProductOut instance from a Product entity."""
         if isinstance(entity.uuid, UUID):
             try:
-                # Try to convert the UUID from string to UUID object
                 entity.uuid = UUID(str(entity.uuid))
             except ValueError:
-                raise ValueError(f"The UUID provided'{entity.uuid}'is not valid")
+                raise ValueError(f"The UUID provided '{entity.uuid}' is not valid")  # noqa: TRY003, TRY004, B904
         elif not isinstance(entity.uuid, UUID):
-            raise ValueError(f"The UUID provided '{entity.uuid}' is not valid")
-        
+            raise ValueError(f"The UUID provided '{entity.uuid}' is not valid")  # noqa: TRY003, TRY004, B904
+
         return ProductOut(
             id=entity._id,
             uuid=entity.uuid,
@@ -87,10 +84,12 @@ class ProductOut(ProductCreationIn):
             price=entity.price,
             description=entity.description,
             images=entity.images,
-            cookTime=entity.cookTime,       
+            cooktime=entity.cooktime,
         )
-    
+
+
 class ProductCategoryEnum(str, Enum):
+    """Represents the incoming data for a Product Category."""
     LANCHE = "lanche"
     ACOMPANHAMENTO = "acompanhamento"
     BEBIDA = "bebida"
@@ -99,13 +98,14 @@ class ProductCategoryEnum(str, Enum):
 
 class ProductCategoryIn(BaseModel):
     """Represents the incoming data for a Product Category."""
+
     category: ProductCategoryEnum
-    
+
 
 __all__ = [
+    "ProductCategoryEnum",
+    "ProductCategoryIn",
     "ProductCreationIn",
     "ProductOut",
     "ProductUpdateIn",
-    "ProductCategoryIn",
-    "ProductCategoryEnum"
 ]

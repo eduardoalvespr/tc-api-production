@@ -13,7 +13,7 @@ class ProductCreation:
     price: float
     description: str
     images: List[str]
-    cookTime: int
+    cooktime: int
 
 
 __all__ = ["ProductCreation"]

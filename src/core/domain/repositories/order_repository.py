@@ -2,7 +2,6 @@ from abc import ABC, abstractmethod
 from typing import List
 from uuid import UUID
 
-
 from ..entities import Order
 from ..value_objects import OrderStatus
 

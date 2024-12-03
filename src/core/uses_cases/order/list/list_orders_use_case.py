@@ -1,8 +1,7 @@
 from typing import Iterable
 
 from ....domain.repositories.order_repository import OrderRepository
-
-from ..shared_dtos import  OrderResult
+from ..shared_dtos import OrderResult
 
 
 class ListOrdersUseCase:
@@ -31,7 +30,9 @@ class ListOrdersUseCase:
                 created_at=order.created_at,
                 updated_at=order.updated_at,
                 order_uuid=order.order_uuid,
-            ) for order in orders]
+            )
+            for order in orders
+        ]
 
 
 __all__ = ["ListOrdersUseCase"]

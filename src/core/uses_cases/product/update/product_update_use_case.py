@@ -3,7 +3,6 @@ from uuid import UUID
 from ....domain.base import DomainError
 from ....domain.entities import Product
 from ....domain.repositories import ProductRepository
-
 from ..shared_dtos import ProductResult
 from .product_update_dto import ProductUpdate
 
@@ -45,7 +44,7 @@ class ProductUpdateUseCase:
                 price=product.price,
                 description=product.description,
                 images=product.images,
-                cookTime=product.cookTime
+                cooktime=product.cooktime,
             ),
         )
 
@@ -60,7 +59,7 @@ class ProductUpdateUseCase:
             price=db_product.price,
             description=db_product.description,
             images=db_product.images,
-            cookTime=db_product.cookTime,
+            cooktime=db_product.cooktime,
             created_at=db_product.created_at,
             updated_at=db_product.updated_at,
         )

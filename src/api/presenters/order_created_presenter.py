@@ -13,7 +13,7 @@ class OrderCreatedPresenter(Presenter[OrderCreationOut, OrderResult]):
             order_uuid=data.order_uuid,
             status=data.status,
             id=data.id,
-            )
+        )
 
 
 __all__ = ["OrderCreatedPresenter"]

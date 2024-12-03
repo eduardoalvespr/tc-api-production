@@ -9,7 +9,6 @@ This module provides a declaration of such objects,
 promoting code consistency and domain integrity.
 """
 
-
 from .category import Category
 from .order_status import OrderStatus
 

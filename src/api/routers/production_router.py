@@ -1,6 +1,7 @@
 from http import HTTPStatus
 from typing import List
 from uuid import UUID
+
 from fastapi import APIRouter, Depends
 
 from ..controllers.order_controller import OrderController
@@ -22,6 +23,7 @@ def checkin(
     """Process a fake checkout by adding selected products to the order queue."""
     return controller.checkin(order_in)
 
+
 @router.put("/{order_uuid}/status", response_model=OrderOut)
 def update_order_status(
     order_uuid: UUID,
@@ -39,4 +41,3 @@ def get_order(
 ) -> OrderOut:
     """Return an order."""
     return controller.get_order(order_uuid)
-
