@@ -32,6 +32,11 @@ jobs:
         run: |
           aws ecr get-login-password --region ${{ env.REGION_DEFAULT }} | docker login --username AWS --password-stdin ${{ secrets.AWS_ACCOUNT_ID }}.dkr.ecr.${{ env.REGION_DEFAULT }}.amazonaws.com
 
+      - name: Create ECR Repository if not exists
+        run: |
+          aws ecr describe-repositories --repository-names tc-api-production --region ${{ env.REGION_DEFAULT }} || \
+          aws ecr create-repository --repository-name tc-api-production --region ${{ env.REGION_DEFAULT }}
+        
       - name: Build and Push Docker Image
         run: |
           docker build -t tc-api-production:latest .
