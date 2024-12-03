@@ -35,8 +35,8 @@ jobs:
       - name: Build and Push Docker Image
         run: |
           docker build -t tc-api-production:latest .
-          docker tag tc-api-production:latest ${{ secrets.AWS_ACCOUNT_ID }}.dkr.ecr.${{ env.REGION_DEFAULT }}.amazonaws.com/project-01:latest
-          docker push ${{ secrets.AWS_ACCOUNT_ID }}.dkr.ecr.${{ env.REGION_DEFAULT }}.amazonaws.com/project-01:latest
+          docker tag tc-api-production:latest ${{ secrets.AWS_ACCOUNT_ID }}.dkr.ecr.${{ env.REGION_DEFAULT }}.amazonaws.com/tc-api-production:latest
+          docker push ${{ secrets.AWS_ACCOUNT_ID }}.dkr.ecr.${{ env.REGION_DEFAULT }}.amazonaws.com/tc-api-production:latest
 
       - name: Get kubeconfig
         run: |
@@ -49,7 +49,7 @@ jobs:
           kubectl apply -f ingress.yaml
           kubectl apply -f hpa.yaml
           kubectl apply -f deployment.yaml
-          kubectl set image deployment/tc-api-production tc-api-production=${{ secrets.AWS_ACCOUNT_ID }}.dkr.ecr.${{ env.REGION_DEFAULT }}.amazonaws.com/project-01:latest
+          kubectl set image deployment/tc-api-production tc-api-production=${{ secrets.AWS_ACCOUNT_ID }}.dkr.ecr.${{ env.REGION_DEFAULT }}.amazonaws.com/tc-api-production:latest
           kubectl rollout restart deployment/tc-api-production 
 
       - name: Verify Deployment
